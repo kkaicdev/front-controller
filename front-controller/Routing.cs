@@ -10,7 +10,7 @@ namespace FrontController
         public async Task ProcessRequestAsync(HttpListenerContext context)
         {
             string path = context.Request.Url!.AbsolutePath;
-            Console.WriteLine($"[LOG] Requisição para {path} | Método {context.Request.HttpMethod}");
+            Logger.Info($"[LOG] requisição para: {path} | método: {context.Request.HttpMethod}");
 
             IController controller = Router.GetController(path);
 

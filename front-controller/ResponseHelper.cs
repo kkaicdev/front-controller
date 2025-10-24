@@ -6,23 +6,18 @@ namespace FrontController
 {
     public static class ResponseHelper
     {
+        // Codificação de caracteres
         public static async Task WriteTextAsync(HttpListenerResponse response, string text, string contentType = "text/plain")
         {
             response.ContentType = $"{contentType}; charset=utf-8";
             byte[] buffer = System.Text.Encoding.UTF8.GetBytes(text);
-
             await response.OutputStream.WriteAsync(buffer);
             response.Close();
         }
 
-        // Envia um arquivo para download
-        public static async Task WriteFileAsync(
-            HttpListenerResponse response,
-            string filePath,
-            string contentType,
-            string downloadFilename)
+        // Arquivo para download
+        public static async Task WriteFileAsync(HttpListenerResponse response, string filePath, string contentType, string downloadFilename)
         {
-
             FileInfo fileInfo = new FileInfo(filePath);
 
             // MIME Type
@@ -44,7 +39,6 @@ namespace FrontController
             }
             catch (Exception)
             {
-                // Se o fluxo falhar entraremos no finally
                 response.Abort();
                 throw;
             }

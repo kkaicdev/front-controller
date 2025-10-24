@@ -30,12 +30,13 @@ namespace FrontController
         public async Task HandleAsync(HttpListenerContext context)
         {
             const string FilePath = "caminho//do//arquivo//arquivo.zip";
-            const string FileName = "caminho//do//arquivo//arquivo.zip";
+            const string FileName = "file.zip";
 
             if (!System.IO.File.Exists(FilePath))
             {
                 context.Response.StatusCode = 404;
                 await ResponseHelper.WriteTextAsync(context.Response, "Arquivo não encontrado no servidor.", "text/plain");
+                Logger.Error("Nenhum arquivo de download encontrado");
                 return;
             }
 
@@ -47,15 +48,13 @@ namespace FrontController
                     "application/zip",
                     FileName
                 );
+                Logger.Success("Arquivo baixado com sucesso");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erro no download: {ex.Message}");
+                Logger.Error($"Erro no download: {ex.Message}");
 
-                await ResponseHelper.WriteTextAsync(
-                    context.Response,
-                    "Erro ao processar o arquivo para download." + ex.Message
-                );
+                await ResponseHelper.WriteTextAsync(context.Response, "Erro ao processar o arquivo para download." + ex.Message);
             }
         }
     }

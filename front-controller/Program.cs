@@ -21,7 +21,7 @@ namespace FrontController
         {
             _listener.Prefixes.Add(prefix);
             _listener.Start();
-            Console.WriteLine($"Servidor iniciado em {prefix}");
+            Logger.Success($"Servidor iniciado em: {prefix}");
 
             while (true)
             {
@@ -32,7 +32,7 @@ namespace FrontController
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"[ERRO DE INFRA] {ex.Message}");
+                    Logger.Error($"Erro na infraestrutura: {ex.Message}");
                     break;
                 }
 
@@ -44,7 +44,7 @@ namespace FrontController
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"[ERRO DE PROCESSAMENTO] {ex.Message}");
+                        Logger.Error($"Erro de processamento: {ex.Message}");
                     }
                 });
             }
