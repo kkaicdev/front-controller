@@ -10,7 +10,7 @@ namespace FrontController
         public async Task ProcessRequestAsync(HttpListenerContext context)
         {
             string path = context.Request.Url!.AbsolutePath;
-            Logger.Info($"[LOG] requisição para: {path} | método: {context.Request.HttpMethod}");
+            Logger.Info($"[LOG] requisiÃ§Ã£o para: {path} | mÃ©todo: {context.Request.HttpMethod}");
 
             IController controller = Router.GetController(path);
 
@@ -24,7 +24,9 @@ namespace FrontController
         private static readonly Dictionary<string, Func<IController>> Routes = new(StringComparer.OrdinalIgnoreCase)
         {
             {"/health", () => new HealthController() },
-            {"/download", () => new DownloadController() }
+            {"/download", () => new DownloadController() },
+            {"/messages", () => new MessageController() },
+            {"/messages/list", () => new MessageListController() },
         };
 
         public static IController GetController(string path)
